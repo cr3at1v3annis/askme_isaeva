@@ -1,0 +1,17 @@
+{% extends 'inc/base.html' %}
+{% block title_block %}
+<div class="d-flex gap-3 align-items-center">
+    <h1>Tag {{tag}}</h1>
+</div>
+{% endblock %}
+{% block content %}
+<div class="col-9">
+    <div class="d-flex flex-column gap-3">
+        {% for question in questions %}
+        {% include 'item.html' %}
+        {% endfor %}
+
+        {% include 'paginator.html' %}
+    </div>
+</div>
+{% endblock %}

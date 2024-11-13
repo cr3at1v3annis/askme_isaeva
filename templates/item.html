@@ -10,7 +10,7 @@
                        aria-label="default input example">
             </div>
             <div class="col-9">
-                <h5 class="card-title"><a href="{% url 'question' question.id %}">{{question.title}}</a></h5>
+                <h5 class="card-title"><a href="{% url 'question' question.question_id %}">{{question.title}}</a></h5>
                 <p class="card-text">{{question.text}}</p>
                 <div class="d-flex gap-3">
                     <a href="#" class="card-link">Answer (3)</a>

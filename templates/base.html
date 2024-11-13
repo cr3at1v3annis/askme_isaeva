@@ -10,66 +10,60 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-            <div class="d-flex w-100 justify-content-between align-items-center">
-                <a class="navbar-brand" href="/">ASK ME</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <div class="d-flex w-100 justify-content-between align-items-center">
+            <a class="navbar-brand" href="/">ASK ME</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success">Search!</button>
-                </form>
-                <a class="btn btn-outline-success" href="/ask">ASK!</a>
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success">Search!</button>
+            </form>
+            <a class="btn btn-outline-success" href="/ask">ASK!</a>
 
-                <div class="d-flex gap-1">
-                    <img src="{% static 'img/asda.jpg' %}" style="height: 40px; width: 50px" alt="Profile">
-                    <div>
-                        dr pepper
-                    </div>
-                    <a href="#">Settings</a>
-                    <a href="#">Log out</a>
+            <div class="d-flex gap-1">
+                <img src="{% static 'img/asda.jpg' %}" style="height: 40px; width: 50px" alt="Profile">
+                <div>
+                    dr pepper
                 </div>
+                <a href="#">Settings</a>
+                <a href="#">Log out</a>
             </div>
         </div>
-    </nav>
-    <main class="container mt-3">
-        {% block title_block %}
-        {% endblock %}
+    </div>
+</nav>
+<main class="container mt-3">
+    {% block title_block %}
+    {% endblock %}
 
-        <div class="row">
-            {% block content %}
-            {% endblock %}
-            <div class="col">
-                <section class="mb-3">
-                    <h2>Popular tags</h2>
-                    <span class="badge text-bg-primary">Primary</span>
-                    <span class="badge text-bg-secondary">Secondary</span>
-                    <span class="badge text-bg-success">Success</span>
-                    <span class="badge text-bg-danger">Danger</span>
-                    <span class="badge text-bg-warning">Warning</span>
-                    <span class="badge text-bg-info">Info</span>
-                    <span class="badge text-bg-light">Light</span>
-                    <span class="badge text-bg-dark">Dark</span>
-                    <span class="badge text-bg-dark">Philosophy</span>
-                </section>
-                <section>
-                    <h2>Best members</h2>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><a href="#">Member</a></li>
-                        <li class="list-group-item"><a href="#">Member</a></li>
-                        <li class="list-group-item"><a href="#">Member</a></li>
-                        <li class="list-group-item"><a href="#">Member</a></li>
-                        <li class="list-group-item"><a href="#">Member</a></li>
-                    </ul>
-                </section>
-            </div>
+    <div class="row">
+        {% block content %}
+        {% endblock %}
+        <div class="col">
+            <section class="mb-3">
+                <h2>Popular tags</h2>
+                {% for tag in popular_tags %}
+
+                <a class="px-2 py-1 d-inline-block rounded text-nowrap my-1 text-decoration-none text-dark"
+                   style="background-color: rgba({{tag.color}}, 0.2)" href="{% url 'tag_page' tag_name=tag %}">{{tag}}</a>
+                {% endfor %}
+            </section>
+            <section>
+                <h2>Best members</h2>
+                <ul class="list-group list-group-flush">
+                    {% for member in best_members %}
+                        <li class="text-green hover">{{ member }}</li>
+                    {% endfor %}
+                </ul>
+            </section>
         </div>
-    </main>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    </div>
+</main>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
 </body>
-<footer class="mb-2 mt-5 d-flex"> <small class="mb-2 d-flex">Copyright &copy;  2024, ASK ME Corporation</small> </footer>
+<footer class="mb-2 mt-5 d-flex"><small class="mb-2 d-flex">Copyright &copy; 2024, ASK ME Corporation</small></footer>
 </html>
