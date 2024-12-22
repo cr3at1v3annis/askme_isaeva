@@ -3,7 +3,7 @@ from audioop import reverse
 from django.db import models
 import operator
 from django.contrib.auth.models import User
-from django.db.models import DateField
+from django.db.models import DateField, DateTimeField
 
 
 class Profile(models.Model):
@@ -44,7 +44,7 @@ class Question(models.Model):
     tags = models.ManyToManyField(Tag, blank=True)
     rating = models.IntegerField(default=0)
     answer_count = models.IntegerField(default=0)
-    creation_date = DateField()
+    creation_date = DateTimeField()
     objects = QuestionManager()
     def __str__(self):
         return f"{self.question_id} {self.title}"
@@ -78,7 +78,7 @@ class QuestionLike(models.Model):
         return f"{self.like_id}"
 
     class Meta:
-        unique_together = [["author", "question"], ["author", "question"]]
+        unique_together = [["author", "question"]]
 
 class AnswerLike(models.Model):
     TYPES_OF_LIKES = {
@@ -90,7 +90,7 @@ class AnswerLike(models.Model):
     answer = models.ForeignKey(Answer, db_column="answer_id", null=False, on_delete=models.CASCADE)
     type_of_like = models.CharField(max_length=1, choices=TYPES_OF_LIKES)
     class Meta:
-        unique_together = [["author", "answer"], ["author", "answer"]]
+        unique_together = [["author", "answer"]]
     def __str__(self):
         return f"{self.like_id}"
 
