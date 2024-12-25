@@ -26,12 +26,16 @@
             <a class="btn btn-outline-success" href="/ask">ASK!</a>
 
             <div class="d-flex gap-1">
+                {% if request.user.is_authenticated %}
                 <img src="{% static 'img/asda.jpg' %}" style="height: 40px; width: 50px" alt="Profile">
                 <div>
-                    dr pepper
+                    {{ request.user.username }}
                 </div>
-                <a href="{% url 'index' %}">Settings</a>
-                <a href="{% url 'index' %}">Log out</a>
+                <a href="{% url 'settings' %}">Settings</a>
+                <a href="{% url 'logout' %}">Log out</a>
+                {% else %}
+                <a href="{% url 'login' %}">Log in</a>
+                {% endif %}
             </div>
         </div>
     </div>

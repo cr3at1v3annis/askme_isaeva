@@ -2,8 +2,11 @@ import copy
 
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseNotFound
-from . import models
+from django.contrib import auth
+from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
+from . import models, forms
+from django.shortcuts import redirect
+from .forms import LoginForms, RegisterForm
 
 from app.models import QuestionManager
 
@@ -44,13 +47,43 @@ def question(request, question_id):
 def login(request):
     popular_tags = models.Tag.objects.order_by_popular()[:10]
     best_members = models.Profile.objects.all()[:5]
-    return render(request, 'login.html', context={'tags': popular_tags, 'members': best_members})
+    form = LoginForms
+    if request.method == 'POST':
+        form = LoginForms(request. POST)
+        if form.is_valid():
+            user = auth.authenticate(request, **form.cleaned_data)
+            if user:
+                auth.login(request, user)
+                return redirect('ask')
+            forms.add_error('password', 'Invalid username or password.')
+    return render(request, 'login.html', context={'tags': popular_tags, 'members': best_members ,
+                                                  'form' : form})
 
+
+def logout(request):
+    auth.logout(request)
+    return redirect('login')
 
 def signup(request):
     popular_tags = models.Tag.objects.order_by_popular()[:10]
     best_members = models.Profile.objects.all()[:5]
-    return render(request, 'signup.html', context={'tags': popular_tags, 'members': best_members})
+    form = RegisterForm
+    if request.method == 'POST':
+        form = RegisterForm(request.POST, request.FILES)
+        if form.is_valid():
+            new_user = form.save()
+            if new_user:
+                user = auth.authenticate(request, **new_user)
+                auth.login(request, user)
+                return HttpResponseRedirect("/")
+    return render(request, 'signup.html', context={'tags': popular_tags, 'members': best_members,
+                                                   'form': form})
+
+def settings(request):
+    popular_tags = models.Tag.objects.order_by_popular()[:10]
+    best_members = models.Profile.objects.all()[:5]
+    return render(request, 'settings.html', context={'tags': popular_tags, 'members': best_members})
+
 
 def tag_page(request, tag_name):
     if not models.Tag.objects.filter(name=tag_name).exists():

@@ -66,14 +66,10 @@ class Answer(models.Model):
 
 
 class QuestionLike(models.Model):
-    TYPES_OF_LIKES = {
-        "L" : "Like",
-        "D" : "Dislike"
-    }
     like_id = models.AutoField(primary_key=True)
     author = models.ForeignKey(Profile, db_column="user_id", null=False, on_delete=models.CASCADE)
     question = models.ForeignKey(Question, db_column="question_id", null=False, on_delete=models.CASCADE)
-    type_of_like = models.CharField(max_length=1, choices=TYPES_OF_LIKES)
+    type_of_like = models.BooleanField()
     def __str__(self):
         return f"{self.like_id}"
 
@@ -81,14 +77,10 @@ class QuestionLike(models.Model):
         unique_together = [["author", "question"]]
 
 class AnswerLike(models.Model):
-    TYPES_OF_LIKES = {
-        "L" : "Like",
-        "D" : "Dislike"
-    }
     like_id = models.AutoField(primary_key=True)
     author = models.ForeignKey(Profile, db_column="user_id", null=False, on_delete=models.CASCADE)
     answer = models.ForeignKey(Answer, db_column="answer_id", null=False, on_delete=models.CASCADE)
-    type_of_like = models.CharField(max_length=1, choices=TYPES_OF_LIKES)
+    type_of_like = models.BooleanField()
     class Meta:
         unique_together = [["author", "answer"]]
     def __str__(self):

@@ -1,4 +1,5 @@
 {% extends 'base.html'%}
+{% load bootstrap5 %}
 {% block title_block %}
 <div class="d-flex gap-3 align-items-center">
     <h1>Log in</h1>
@@ -6,26 +7,29 @@
 {% endblock %}
 {% block content %}
 <div class="col-9">
-    <form class="row g-3 needs-validation mb-3" novalidate>
-        <div class="d-flex">
-            <label for="validationLogin" class="form-label col-3">Login</label>
-            <input type="text" class="form-control" id="validationLogin" value="" required>
-            <div class="invalid-feedback">
-                Please enter your login!
-            </div>
-        </div>
+    <form class="row g-3 needs-validation mb-3" action="" method="POST">
+<!--        <div class="d-flex">-->
+<!--            <label for="username" class="form-label col-3">Login</label>-->
+<!--            <input type="text" class="form-control" id="username" name="username">-->
+<!--            <div class="invalid-feedback">-->
+<!--                Please enter your login!-->
+<!--            </div>-->
+<!--        </div>-->
 
-        <div class="d-flex">
-            <label for="validationCustom05" class="form-label col-3">Password</label>
-            <input type="password" class="form-control" id="validationCustom05" required>
-            <div class="invalid-feedback">
-                Please provide a valid zip.
-            </div>
-        </div>
+<!--        <div class="d-flex">-->
+<!--            <label for="password" class="form-label col-3">Password</label>-->
+<!--            <input type="password" class="form-control" id="password" name="password">-->
+<!--            <div class="invalid-feedback">-->
+<!--                Please provide a valid password.-->
+<!--            </div>-->
+<!--        </div>-->
+        {% bootstrap_form form %}
+        {% buttons %}
         <div class="col-12">
             <button class="btn btn-primary" type="submit">LOG IN!</button>
         </div>
+        {% endbuttons %}
     </form>
-    <a href="./signup.html" class="d-flex"> Create new account!</a>
+    <a href="{% url 'signup' %}" class="d-flex"> Create new account!</a>
 </div>
 {% endblock %}
